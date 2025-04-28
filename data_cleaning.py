@@ -28,9 +28,11 @@ def clean_car_data(df):
     #creating a new column for car age
     df['age'] = 2020 - df['year']
 
+    # converting model to binary to check for f-150
+    df['is_f-150'] = df['model'].apply(lambda x: 1 if x == 'f-150' else 0)
 
     # Drop unnecessary columns
-    df = df.drop(columns=['condition', 'title_status', 'id', 'state', 'vin', 'lot', 'country', 'brand', 'year'], errors='ignore')
+    df = df.drop(columns=['condition', 'title_status', 'id', 'state', 'vin', 'lot', 'country', 'brand', 'year', 'model'], errors='ignore')
     
     # Collapse color
     main_colors = ['white', 'black', 'gray', 'silver', 'red', 'blue']
