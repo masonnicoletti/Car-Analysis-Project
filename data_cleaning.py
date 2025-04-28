@@ -19,9 +19,10 @@ def clean_car_data(df):
     else:
         df['region'] = 'other'
     
-    # Drop unnecessary columns
+    # Drop unnecessary columns, and filter to just nissan
     df = df[~df['model'].str.lower().isin(['door', 'doors'])]
     df = df[df['country'].str.lower() != 'canada']
+    df = df[df['brand'].str.lower() == 'nissan']
     df = df.drop(columns=['condition', 'title_status', 'id', 'state', 'vin', 'lot', 'country'], errors='ignore')
     
     # Collapse color
