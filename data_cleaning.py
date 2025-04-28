@@ -22,7 +22,7 @@ def clean_car_data(df):
     # Drop unnecessary columns, and filter to just nissan
     df = df[~df['model'].str.lower().isin(['door', 'doors'])]
     df = df[df['country'].str.lower() != 'canada']
-    df = df[df['brand'].str.lower() == 'nissan']
+    df = df[df['brand'].str.lower() == 'ford']
     df = df.drop(columns=['condition', 'title_status', 'id', 'state', 'vin', 'lot', 'country'], errors='ignore')
     
     # Collapse color
@@ -31,5 +31,10 @@ def clean_car_data(df):
     
     # Drop cars before 2010
     df = df[df['year'] >= 2010]
+
+    # converting object variables into categorical
+    object_columns = df.select_dtypes(include=['object']).columns
+    for col in object_columns:
+        df[col] = pd.Categorical(df[col])
     
     return df
