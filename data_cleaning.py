@@ -1,23 +1,34 @@
-## data cleaning
-import pandas as pd
-
+## data cleaning function
 def clean_car_data(df):
-    # regions
+    df = df.copy()
+    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+    # Map full lowercase state names to regions
     region_mapping = {
-        'Northeast': ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
-        'Midwest': ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
-        'South': ['DE', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'DC', 'WV', 'AL', 'KY', 'MS', 'TN', 'AR', 'LA', 'OK', 'TX'],
-        'West': ['AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY', 'AK', 'CA', 'HI', 'OR', 'WA']
+        'Northeast': ['connecticut', 'maine', 'massachusetts', 'new hampshire', 'rhode island', 'vermont', 'new jersey', 'new york', 'pennsylvania'],
+        'Midwest': ['illinois', 'indiana', 'michigan', 'ohio', 'wisconsin', 'iowa', 'kansas', 'minnesota', 'missouri', 'nebraska', 'north dakota', 'south dakota'],
+        'South': ['delaware', 'florida', 'georgia', 'maryland', 'north carolina', 'south carolina', 'virginia', 'district of columbia', 'west virginia', 
+                  'alabama', 'kentucky', 'mississippi', 'tennessee', 'arkansas', 'louisiana', 'oklahoma', 'texas'],
+        'West': ['arizona', 'colorado', 'idaho', 'montana', 'nevada', 'new mexico', 'utah', 'wyoming', 'alaska', 'california', 'hawaii', 'oregon', 'washington']
     }
-    # Reverse the region mapping to state -> region
     state_to_region = {state: region for region, states in region_mapping.items() for state in states}
-    df['region'] = df['state'].map(state_to_region)
+    
+    if 'state' in df.columns:
+        df['state'] = df['state'].str.lower()  # just in case it's not already lowercase
+        df['region'] = df['state'].map(state_to_region)
+        df['region'] = df['region'].fillna('other')
+    else:
+        df['region'] = 'other'
     
     # Drop unnecessary columns
-    df = df.drop(columns=['condition', 'title_status', 'id', 'state'], errors='ignore')
+    df = df[~df['model'].str.lower().isin(['door', 'doors'])]
+    df = df[df['country'].str.lower() != 'canada']
+    df = df.drop(columns=['condition', 'title_status', 'id', 'state', 'vin', 'lot', 'country'], errors='ignore')
     
     # Collapse color
     main_colors = ['white', 'black', 'gray', 'silver', 'red', 'blue']
     df['color'] = df['color'].str.lower().apply(lambda x: x if any(color in x for color in main_colors) else 'other')
+    
+    # Drop cars before 2010
+    df = df[df['year'] >= 2010]
     
     return df
