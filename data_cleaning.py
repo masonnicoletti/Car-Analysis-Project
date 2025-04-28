@@ -1,4 +1,3 @@
-## data cleaning function
 def clean_car_data(df):
     df = df.copy()
     df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
@@ -19,11 +18,12 @@ def clean_car_data(df):
     else:
         df['region'] = 'other'
     
-    # Drop unnecessary columns, and filter to just nissan
+    # Drop unnecessary columns
     df = df[~df['model'].str.lower().isin(['door', 'doors'])]
     df = df[df['country'].str.lower() != 'canada']
     df = df[df['brand'].str.lower() == 'ford']
-    df = df.drop(columns=['condition', 'title_status', 'id', 'state', 'vin', 'lot', 'country'], errors='ignore')
+    df = df[df['mileage'] <= 150000]
+    df = df.drop(columns=['condition', 'title_status', 'id', 'state', 'vin', 'lot', 'country', 'brand'], errors='ignore')
     
     # Collapse color
     main_colors = ['white', 'black', 'gray', 'silver', 'red', 'blue']
@@ -32,9 +32,7 @@ def clean_car_data(df):
     # Drop cars before 2010
     df = df[df['year'] >= 2010]
 
-    # converting object variables into categorical
     object_columns = df.select_dtypes(include=['object']).columns
-    for col in object_columns:
-        df[col] = pd.Categorical(df[col])
-    
+    df[object_columns] = df[object_columns].astype('category')
+
     return df
