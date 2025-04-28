@@ -18,20 +18,24 @@ def clean_car_data(df):
     else:
         df['region'] = 'other'
     
-    # Drop unnecessary columns
+    #dropping rows with unnecessary data
     df = df[~df['model'].str.lower().isin(['door', 'doors'])]
     df = df[df['country'].str.lower() != 'canada']
     df = df[df['brand'].str.lower() == 'ford']
     df = df[df['mileage'] <= 150000]
-    df = df.drop(columns=['condition', 'title_status', 'id', 'state', 'vin', 'lot', 'country', 'brand'], errors='ignore')
+    df = df[df['year'] >= 2010]
+
+    #creating a new column for car age
+    df['age'] = 2020 - df['year']
+
+
+    # Drop unnecessary columns
+    df = df.drop(columns=['condition', 'title_status', 'id', 'state', 'vin', 'lot', 'country', 'brand', 'year'], errors='ignore')
     
     # Collapse color
     main_colors = ['white', 'black', 'gray', 'silver', 'red', 'blue']
     df['color'] = df['color'].str.lower().apply(lambda x: x if any(color in x for color in main_colors) else 'other')
     
-    # Drop cars before 2010
-    df = df[df['year'] >= 2010]
-
     object_columns = df.select_dtypes(include=['object']).columns
     df[object_columns] = df[object_columns].astype('category')
 
