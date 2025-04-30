@@ -17,9 +17,7 @@ The goal of conducting EDA was to visualize some of the important variables in t
 - We determined it is valuable to focus on Ford cars because this brand has by far the most data out of the other makes. F-150 is the most frequent Ford model in the data. There are also hundreds of entries with a model called 'door' and 'doors'. We are uncertain what this model means, so we will drop these rows from the data.
 
 
-
 ### Research Question
-
 
 
 ### Data Cleaning Function
@@ -29,6 +27,7 @@ The goal of conducting EDA was to visualize some of the important variables in t
 
 
 ### Linear Regression
+The next step in this process was to build a linear regression model. Unlike the Decision Tree Regressor, we had to do one-hot coding, creating dummy variables for all the categorical data. After standardizing the numerical data, separating the features and target variable, and partitioning the data into train/test sets, we instantiated a Linear Regression model. The intercept of this model is $36k, far greater than the average car price. As a result, the majority of the coefficients were negative, and they were pretty large values. The only positive coefficients were for the variables: `is-f150` (binary), `color_off-white`, and `region-Northeast`. After predicting on the test data, the R2 score was calculated to be 0.156, a slight improvement from the Decision Tree. The RMSE was 10,000 - a very large value considering the prices of the cars in the dataset.
 
 
 ### Polynomial Regression
