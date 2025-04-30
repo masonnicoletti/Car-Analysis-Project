@@ -3,7 +3,7 @@
 ### Selecting the Data
 
 
-### Creating a Question
+### Research Question
 
 
 ### EDA
