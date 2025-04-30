@@ -18,19 +18,23 @@ The goal of conducting EDA was to visualize some of the important variables in t
 
 
 ### Research Question
+After deciding to focus on Ford vehicles, we crafted our research question:
+
+**Can we build a model that accurately predicts the selling price of used Ford Vehicles?**
 
 
 ### Data Cleaning Function
 
 
-### Decision Tree
+### Regression Trees
 
 
 ### Linear Regression
-The next step in this process was to build a linear regression model. Unlike the Decision Tree Regressor, we had to do one-hot coding, creating dummy variables for all the categorical data. After standardizing the numerical data, separating the features and target variable, and partitioning the data into train/test sets, we instantiated a Linear Regression model. The intercept of this model is $36k, far greater than the average car price. As a result, the majority of the coefficients were negative, and they were pretty large values. The only positive coefficients were for the variables: `is-f150` (binary), `color_off-white`, and `region-Northeast`. After predicting on the test data, the R2 score was calculated to be 0.156, a slight improvement from the Decision Tree. The RMSE was 10,000 - a very large value considering the prices of the cars in the dataset.
+The next step in this process was to build a linear regression model. Unlike the Decision Tree Regressor, we had to do one-hot coding, creating dummy variables for all the categorical data. After standardizing the numerical data, separating the features and target variable, and partitioning the data into train/test sets, we instantiated a Linear Regression model. The intercept of this model is $36k, far greater than the average car price. As a result, the majority of the coefficients were negative, and they were pretty large values. The only positive coefficients were for the variables: `is-f150` (binary), `color_off-white`, and `region-Northeast`. After predicting on the test data, the R2 score was calculated to be 0.156, a slight improvement from the Decision Tree. The RMSE was 10,000 - a very large value considering the prices of the cars in the dataset. The plot of the predicted values vs the true values revealed a nonlinear distribution, possibly one that could be modeled better using polynomial regression.
 
 
 ### Polynomial Regression
 
 
 ### Findings
+Out of the three types of models implemented on the car data, all of them had very poor results. The greatest correlation was achieved with the linear regression model, although this R2 score of 0.16 is not indicative of any useful predictive power. We reason that the USA_cars_dataset offered too few useful features to effectively predict prices of cars. In the end, the majority of features in this data had to be collapsed or dropped altogether, giving little room for an effective model to be made.
