@@ -34,7 +34,7 @@ The next step in this process was to build a linear regression model. Unlike the
 
 
 ### Polynomial Regression
-The polynomial regression model process was similar to building a regression model. However, instead of regressing over the data once, we created a list of degrees, and looping through the list, fit many polynomial regression models over a range of degrees. The findings here were unfortunately not very useful again. The model worked best with two degrees, scoring a similar R2 score and RMSE as the linear regression model. However, as the number of degrees increased, the R2 score decreased exponentially (even going into large negative values), and the RMSE icreased exponentially. These findings signal the the model is overfitting as the number of degrees is increased. This step unfortunately did not result in a model that improve the predictive power over Ford cars.
+The polynomial regression model process was similar to building a regression model. However, instead of regressing over the data once, we created a list of degrees, and looping through the list, fit many polynomial regression models over a range of degrees. The findings here were unfortunately not very useful again. The model worked best with two degrees, scoring a similar R2 score and RMSE as the linear regression model. However, as the number of degrees increased, the R2 score decreased exponentially (even going into large negative values), and the RMSE increased exponentially. These findings signal the the model is overfitting as the number of degrees is increased. This step unfortunately did not result in a model that improve the predictive power over Ford cars.
 
 
 ### Findings
