@@ -24,7 +24,7 @@ After deciding to focus on Ford vehicles, we crafted our research question:
 
 
 ### Data Cleaning Function
-
+The clean_car_data function takes a DataFrame of used car listings and performs a series of cleaning and transformation steps to prepare the data for analysis or modeling, based on many of the findings from EDA. It starts by removing unnamed or irrelevant columns and filters the data to include only Ford vehicles sold in the United States (excluding listings from Canada). The function standardizes U.S. state names to lowercase and maps them to their corresponding regions (Northeast, Midwest, South, or West), assigning 'other' to unmapped states. It then filters out records with missing or non-informative model names, restricts the data to vehicles from 2010 onward, and removes entries with mileage above 150,000. The car color values are simplified into a limited set of main colors, with all others grouped as 'other'. An age column is added, calculated as the difference between 2020 and the car's model year. Finally, all object-type columns are converted to categorical variables to improve memory efficiency and support downstream analysis. This function was imported into all the ML model files, and it consistently cleaned the data.
 
 ### Regression Trees
 
@@ -34,6 +34,7 @@ The next step in this process was to build a linear regression model. Unlike the
 
 
 ### Polynomial Regression
+The polynomial regression model process was similar to building a regression model. However, instead of regressing over the data once, we created a list of degrees, and looping through the list, fit many polynomial regression models over a range of degrees. The findings here were unfortunately not very useful again. The model worked best with two degrees, scoring a similar R2 score and RMSE as the linear regression model. However, as the number of degrees increased, the R2 score decreased exponentially (even going into large negative values), and the RMSE icreased exponentially. These findings signal the the model is overfitting as the number of degrees is increased. This step unfortunately did not result in a model that improve the predictive power over Ford cars.
 
 
 ### Findings
